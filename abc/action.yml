@@ -62,7 +62,7 @@ runs:
     shell: bash
     env:
       ABC_DEPS: ${{ steps.abc-init.outputs.deps }}
-      ABC_OUT: ${{ (inputs.verbose == '' && '${1:-/dev/stdout}') || '/dev/null' }}
+      ABC_OUT: ${{ (inputs.verbose == 'true' && '${1:-/dev/stdout}') || '/dev/null' }}
       # DEBIAN_FRONTEND: noninteractive
     run: |
       case "${{ runner.os }}" in
