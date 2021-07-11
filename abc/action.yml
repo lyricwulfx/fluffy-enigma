@@ -59,7 +59,7 @@ runs:
   - name: Install | Abc
     shell: bash
     run: |
-      DEPS=${{ steps.abc-init.outputs.deps }}
+      DEPS="${{ steps.abc-init.outputs.deps }}"
 
       # Set output verbosity
       [ "${{ inputs.verbose }}" != "" ] && 
