@@ -39,12 +39,13 @@ runs:
       ABC_PKGS_MACOS: ${{ inputs.macos }}
       ABC_PKGS_WINDOWS: ${{ inputs.windows }}
       ABC_PKGS_UNIX: ${{ inputs.unix }}
+      ABC_CFG_VERBOSE: ${{ inputs.verbose }}
     run: |
       # Set output verbosity
       # We do this here because ${1:-/dev/stdout} doesn't work in env section
-      [ "${{ inputs.verbose }}" != "" ] && 
-      export ABC_OUT=${1:-/dev/stdout} || 
-      export ABC_OUT=/dev/null
+      [ "$ABC_CFG_VERBOSE" == "true" ] && 
+      export ABC_OUT=/dev/null || 
+      export ABC_OUT=${1:-/dev/stdout}
 
       # Check if ABC yml exists
       ABC_YAML_FILE="$GITHUB_WORKSPACE/.abc.yml"
