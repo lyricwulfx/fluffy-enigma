@@ -40,12 +40,11 @@ runs:
       ABC_PKGS_WINDOWS: ${{ inputs.windows }}
       ABC_PKGS_UNIX: ${{ inputs.unix }}
     run: |
-
       # Check if ABC yml exists
       ABC_YAML_FILE="$GITHUB_WORKSPACE/.abc.yml"
       if [ -e "$ABC_YAML_FILE" ]
       then
-        . "$GITHUB_ACTION_PATH/yaml.sh"
+        . "$GITHUB_ACTION_PATH/src/yaml.sh"
         create_variables "$ABC_YAML_FILE" "ABC_YML_"
         ABC_PKGS_ALL="$ABC_PKGS_ALL $ABC_YML_ALL" 
         ABC_PKGS_LINUX="$ABC_PKGS_LINUX $ABC_YML_LINUX"
@@ -92,7 +91,7 @@ runs:
       ABC_OUT=${1:-/dev/stdout}
 
       # Ensure the runner script exists
-      ABC_PLATFORM_SCRIPT="$GITHUB_ACTION_PATH/runner/$RUNNER_OS.sh"
+      ABC_PLATFORM_SCRIPT="$GITHUB_ACTION_PATH/src/runner/$RUNNER_OS.sh"
       if [ ! -e "$ABC_PLATFORM_SCRIPT" ]
       then
         echo "*** ABC *** $RUNNER_OS is not supported by ABC"
