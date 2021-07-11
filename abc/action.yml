@@ -95,16 +95,19 @@ runs:
       ABC_PLATFORM_SCRIPT="$GITHUB_ACTION_PATH/runner/$RUNNER_OS.sh"
       if [ ! -e "$ABC_PLATFORM_SCRIPT" ]
       then
-        echo "*** ABC ***: $RUNNER_OS is not supported by ABC"
+        echo "*** ABC *** $RUNNER_OS is not supported by ABC"
         exit 0
       fi
 
       # Ensure there are any dependencies
       if [ ! -n "${ABC_DEPS// }" ]
       then 
-        echo "*** ABC ***: No dependencies to install on $RUNNER_OS"
+        echo "*** ABC *** No dependencies to install on $RUNNER_OS"
         exit 0
       fi
+
+      echo "*** ABC *** Installing $RUNNER_OS dependencies:"
+      echo "        *** $ABC_DEPS"
       
       # Install dependencies!
       . "$ABC_PLATFORM_SCRIPT"
