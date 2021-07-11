@@ -22,10 +22,10 @@ inputs:
     description: All dependencies
     required: false
   verbose: 
-    description: Verbose output
+    description: Verbose output (DEPRECATED AND HAS NO EFFECT)
     required: false
   no-cache:
-    description: Don't use cache
+    description: Don't use cache (cache not implemented yet)
     required: false
 runs: 
   using: composite
@@ -95,14 +95,14 @@ runs:
       ABC_PLATFORM_SCRIPT="$GITHUB_ACTION_PATH/runner/$RUNNER_OS.sh"
       if [ ! -e "$ABC_PLATFORM_SCRIPT" ]
       then
-        echo "$RUNNER_OS is not supported by ABC" > "$ABC_OUT"
+        echo "*** ABC ***: $RUNNER_OS is not supported by ABC"
         exit 0
       fi
 
       # Ensure there are any dependencies
       if [ ! -n "${ABC_DEPS// }" ]
       then 
-        echo "No dependencies to install on $RUNNER_OS" > "$ABC_OUT"
+        echo "*** ABC ***: No dependencies to install on $RUNNER_OS"
         exit 0
       fi
       
