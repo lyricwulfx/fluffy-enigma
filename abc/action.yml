@@ -31,8 +31,8 @@ runs:
   using: composite
   steps:
   - name: Setup | Resolve runner dependencies
-    shell: bash
     id: abc-init
+    shell: bash
     env: 
       ABC_PKGS_ALL: ${{ inputs.all }}
       ABC_PKGS_LINUX: ${{ inputs.linux }}
@@ -76,18 +76,24 @@ runs:
       
       echo "::set-output name=deps::$ABC_DEPS"
 
-      # TODO: Cache package directories
-      echo "::set-output name=cache_dir::$ABC_CACHE_DIRECTORY"
-      ABC_DEPS_HASH=$(echo -n "${ABC_DEPS}" | openssl dgst -sha1 | awk '{ print $NF }')
-      echo "::set-output name=hash::$ABC_DEPS_HASH"
+      ## TODO: Cache package directories
+      ## Currently cannot use composite step inside a composite action :(
+      ## This is a limitation of Github Actions.
+      ## Thus, in order to cache, we need to switch ABC to node (js).
+      # echo "::set-output name=cache_dir::$ABC_CACHE_DIRECTORY"
+      # ABC_DEPS_HASH=$(echo -n "${ABC_DEPS}" | openssl dgst -sha1 | awk '{ print $NF }')
+      # echo "::set-output name=hash::$ABC_DEPS_HASH"
 
-  - name: Setup | Package cache
-    id: abc-cache
-    uses: actions/cache@v2
-    with:
-      path: ${{ steps.abc-init.outputs.cache_dir }}
-      key: ${{ runner.os }}-abc-${{ steps.abc-init.outputs.hash }}
-      restore-keys: ${{ runner.os }}-abc-
+  ## Currently cannot use composite step inside a composite action :(
+  ## This is a limitation of Github Actions.
+  ## TODO: In order to cache, we need to switch ABC to node (js).
+  # - name: Setup | Package cache
+  #   id: abc-cache
+  #   uses: actions/cache@v2
+  #   with:
+  #     path: ${{ steps.abc-init.outputs.cache_dir }}
+  #     key: ${{ runner.os }}-abc-${{ steps.abc-init.outputs.hash }}
+  #     restore-keys: ${{ runner.os }}-abc-
 
   - name: Install | Abc
     shell: bash
