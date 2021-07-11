@@ -57,14 +57,17 @@ runs:
       ABC_DEPS=""
       case "$RUNNER_OS" in
       Linux)
-        ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_UNIX $ABC_PKGS_LINUX" ;;
+        ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_UNIX $ABC_PKGS_LINUX" 
         ABC_CACHE_DIRECTORY=/var/cache/apt
+      ;;
       macOS)
-        ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_UNIX $ABC_PKGS_MACOS" ;;
-        # CACHE_DIRECTORY= # TODO: Cache brew directory
+        ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_UNIX $ABC_PKGS_MACOS" 
+        # ABC_CACHE_DIRECTORY= # TODO: Cache brew directory
+      ;;
       Windows)
-        ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_WINDOWS"              ;;
-        # CACHE_DIRECTORY= # TODO: Cache choco directory
+        ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_WINDOWS"              
+        # ABC_CACHE_DIRECTORY= # TODO: Cache choco directory
+      ;;
       esac
       
       # Remove extra spaces
