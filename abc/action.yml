@@ -1,0 +1,117 @@
+name: ABC Install
+description: Install Apt, Brew, and Choco dependencies in one action.
+author: LyricWulf
+branding:
+  icon: package
+  color: orange
+
+inputs: 
+  linux:  
+    description: Apt dependencies
+    required: false
+  macos:
+    description: Brew dependencies
+    required: false
+  windows:
+    description: Choco dependencies
+    required: false
+  unix:
+    description: Unix-like dependencies
+    required: false
+  all:
+    description: All dependencies
+    required: false
+  verbose: 
+    description: Verbose output
+    required: false
+  no-cache:
+    description: Don't use cache
+    required: false
+runs: 
+  using: composite
+  steps:
+  - name: Setup | Resolve runner dependencies
+    shell: bash
+    id: abc-init
+    run: |
+      case "${{ runner.os }}" in
+      Linux)
+        ABC_DEPS="${{inputs.all}} ${{inputs.unix}} ${{inputs.linux}}" ;;
+        # CACHE_DIRECTORY="C:\ProgramData\chocolatey\lib"$'\r\n'"%TEMP%\chocolatey" # TODO: Cache apt directory
+      macOS)
+        ABC_DEPS="${{inputs.all}} ${{inputs.unix}} ${{inputs.macos}}" ;;
+        # TODO: Cache brew directory
+        # CACHE_DIRECTORY=
+      Windows)
+        ABC_DEPS="${{inputs.all}} ${{inputs.windows}}" ;;
+        # TODO: Cache choco directory
+        # CACHE_DIRECTORY="C:\ProgramData\chocolatey\lib"$'\r\n'"%TEMP%\chocolatey" # TODO: Cache apt directory
+      esac
+
+      ABC_DEPS_HASH=$(echo -n "${{ABC_DEPS}}" | sha256sum | awk '{print $1}')
+
+      echo "::set-output name=deps::$ABC_DEPS"
+      echo "::set-output name=hash::$ABC_DEPS_HASH"
+      # TODO: Cache package directories
+      # echo "::set-output name=cache_dirs::$CACHE_DIRECTORY"
+
+    # TODO: Cache package files
+  # - name: Setup | Cache system
+  #   uses: actions/cache@v2
+  #   with:
+  #     path: ${{ steps.abc-init.outputs.hash }}
+  #     key: ${{ runner.os }}-abc-cache-${{ steps.abc-init.outputs.hash }}
+  #     retore-keys: ${{ runner.os }}-abc-cache-
+
+  - name: Install | Abc
+    shell: bash
+    run: |
+      DEPS=${{ steps.abc-init.outputs.deps }}
+
+      # Set output verbosity
+      [ "${{ inputs.verbose }}" != "" ] && 
+      OUT=${1:-/dev/stdout} || 
+      OUT=/dev/null
+
+      case "${{ runner.os }}" in
+
+      Linux)
+        if [ -n "${DEPS// }" ]
+        then 
+          echo "Updating apt..."
+          sudo apt-get update > $OUT
+          echo "Installing Linux dependencies:"
+          echo "  $DEPS"
+          # Apt version syntax is libxyz=1.2.3, we can use a simple replace
+          DEBIAN_FRONTEND=noninteractive \
+          sudo apt-get install -y ${DEPS//@/=} > $OUT
+        fi
+      ;;
+
+      macOS)
+        if [ -n "${DEPS// }" ]
+        then
+          echo "Updating brew..."
+          brew update > $OUT
+          echo "Installing macOS dependencies:"
+          echo "  $DEPS"
+          # Brew version syntax is already libxyz@1.2.3 (same as ours)
+          brew install $DEPS > $OUT
+        fi
+      ;;
+
+      Windows)
+        if [ -n "${DEPS// }" ]
+        then
+          echo "Installing Windows dependencies:"
+          echo "  $DEPS"
+          # Choco version syntax is libxyz --version 1.2.3
+          # NOTE: CHOCO WITH VERSIONS, EACH PACKAGE MUST BE INSTALLED ONE AT A TIME
+          for DEP in $DEPS
+          do
+            choco install -y ${DEP//@/ --version } > $OUT
+          done
+        fi
+      ;;
+
+      esac
