@@ -47,21 +47,13 @@ runs:
         # TODO: Cache choco directory
         # CACHE_DIRECTORY="C:\ProgramData\chocolatey\lib"$'\r\n'"%TEMP%\chocolatey" # TODO: Cache apt directory
       esac
-
+      
       ABC_DEPS_HASH=$(echo -n "${{ABC_DEPS}}" | sha256sum | awk '{print $1}')
-
+      
       echo "::set-output name=deps::$ABC_DEPS"
       echo "::set-output name=hash::$ABC_DEPS_HASH"
       # TODO: Cache package directories
       # echo "::set-output name=cache_dirs::$CACHE_DIRECTORY"
-
-    # TODO: Cache package files
-  # - name: Setup | Cache system
-  #   uses: actions/cache@v2
-  #   with:
-  #     path: ${{ steps.abc-init.outputs.hash }}
-  #     key: ${{ runner.os }}-abc-cache-${{ steps.abc-init.outputs.hash }}
-  #     retore-keys: ${{ runner.os }}-abc-cache-
 
   - name: Install | Abc
     shell: bash
