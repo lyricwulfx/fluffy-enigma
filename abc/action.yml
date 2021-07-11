@@ -58,7 +58,7 @@ runs:
       case "$RUNNER_OS" in
       Linux)
         ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_UNIX $ABC_PKGS_LINUX" ;;
-        # CACHE_DIRECTORY= # TODO: Cache apt directory
+        ABC_CACHE_DIRECTORY=/var/cache/apt
       macOS)
         ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_UNIX $ABC_PKGS_MACOS" ;;
         # CACHE_DIRECTORY= # TODO: Cache brew directory
@@ -73,8 +73,8 @@ runs:
       echo "::set-output name=deps::$ABC_DEPS"
 
       # TODO: Cache package directories
-      # echo "::set-output name=cache_dirs::$CACHE_DIRECTORY"
-      # ABC_DEPS_HASH=$(echo -n "${ABC_DEPS}" | sha256sum | awk '{print $1}')
+      echo "::set-output name=cache_dir::$ABC_CACHE_DIRECTORY"
+      ABC_DEPS_HASH=$(echo -n "${ABC_DEPS}" | openssl dgst -sha1 | awk '{ print $NF }')
       echo "::set-output name=hash::$ABC_DEPS_HASH"
 
   - name: Install | Abc
