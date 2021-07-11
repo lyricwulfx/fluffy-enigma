@@ -98,9 +98,9 @@ runs:
   - name: Install | Abc
     shell: bash
     env:
-      ABC_DEPS: steps.abc-init.outputs.deps
-      ABC_CFG_VERBOSE: inputs.verbose
-      ABC_CACHE_HIT: steps.abc-cache.outputs.cache-hit != 'true'
+      ABC_DEPS: ${{ steps.abc-init.outputs.deps }}
+      ABC_CFG_VERBOSE: ${{ inputs.verbose }}
+      # ABC_CACHE_HIT: steps.abc-cache.outputs.cache-hit != 'true'
       # DEBIAN_FRONTEND: noninteractive
     run: |
       # Set output verbosity
