@@ -62,8 +62,8 @@ runs:
     shell: bash
     env:
       DEPS: ${{ steps.abc-init.outputs.deps }}
+      DEBIAN_FRONTEND: noninteractive
     run: |
-
       # Set output verbosity
       [ "${{ inputs.verbose }}" != "" ] && 
       OUT=${1:-/dev/stdout} || 
@@ -79,7 +79,6 @@ runs:
           echo "Installing Linux dependencies:"
           echo "  $DEPS"
           # Apt version syntax is libxyz=1.2.3, we can use a simple replace
-          DEBIAN_FRONTEND=noninteractive \
           sudo apt-get install -y ${DEPS//@/=} > $OUT
         fi
       ;;
