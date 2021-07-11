@@ -39,13 +39,7 @@ runs:
       ABC_PKGS_MACOS: ${{ inputs.macos }}
       ABC_PKGS_WINDOWS: ${{ inputs.windows }}
       ABC_PKGS_UNIX: ${{ inputs.unix }}
-      ABC_CFG_VERBOSE: ${{ inputs.verbose }}
     run: |
-      # Set output verbosity
-      # We do this here because ${1:-/dev/stdout} doesn't work in env section
-      [ "$ABC_CFG_VERBOSE" == "true" ] && 
-      export ABC_OUT=/dev/null || 
-      export ABC_OUT=${1:-/dev/stdout}
 
       # Check if ABC yml exists
       ABC_YAML_FILE="$GITHUB_WORKSPACE/.abc.yml"
@@ -88,8 +82,15 @@ runs:
     shell: bash
     env:
       ABC_DEPS: ${{ steps.abc-init.outputs.deps }}
+      ABC_CFG_VERBOSE: ${{ inputs.verbose }}
       # DEBIAN_FRONTEND: noninteractive
     run: |
+      # Set output verbosity
+      # We do this here because ${1:-/dev/stdout} doesn't work in env section
+      [ "$ABC_CFG_VERBOSE" == "true" ] && 
+      export ABC_OUT=/dev/null || 
+      export ABC_OUT=${1:-/dev/stdout}
+
       # Ensure the runner script exists
       ABC_PLATFORM_SCRIPT="$GITHUB_ACTION_PATH/runner/$RUNNER_OS.sh"
       if [ ! -e "$ABC_PLATFORM_SCRIPT" ]
