@@ -38,4 +38,4 @@ jobs:
           linux: libxkbcommon-dev@0.10.0-1
           macos: ffmpeg
           windows: ruby
-          verbose: false
+          testo: false
