@@ -64,14 +64,14 @@ runs:
       ABC_DEPS=""
       case "$RUNNER_OS" in
       Linux)
-        ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_UNIX $ABC_PKGS_LINUX"
+        ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_UNIX $ABC_PKGS_LINUX" ;;
         # CACHE_DIRECTORY= # TODO: Cache apt directory
       macOS)
-        ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_UNIX $ABC_PKGS_MACOS"
+        ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_UNIX $ABC_PKGS_MACOS" ;;
         
         # CACHE_DIRECTORY= # TODO: Cache brew directory
       Windows)
-        ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_WINDOWS"
+        ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_WINDOWS"              ;;
         # CACHE_DIRECTORY= # TODO: Cache choco directory
       esac
       
