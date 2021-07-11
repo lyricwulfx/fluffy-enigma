@@ -88,8 +88,8 @@ runs:
       # Set output verbosity
       # We do this here because ${1:-/dev/stdout} doesn't work in env section
       [ "$ABC_CFG_VERBOSE" == "true" ] && 
-      export ABC_OUT=/dev/null || 
-      export ABC_OUT=${1:-/dev/stdout}
+      ABC_OUT=/dev/null || 
+      ABC_OUT=${1:-/dev/stdout}
 
       # Ensure the runner script exists
       ABC_PLATFORM_SCRIPT="$GITHUB_ACTION_PATH/runner/$RUNNER_OS.sh"
