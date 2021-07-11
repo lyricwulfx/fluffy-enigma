@@ -5,5 +5,5 @@ echo "  $ABC_DEPS"
 # NOTE: CHOCO WITH VERSIONS, EACH PACKAGE MUST BE INSTALLED ONE AT A TIME
 for ABC_DEP in $ABC_DEPS
 do
-choco install -y ${ABC_DEP//@/ --version } > $ABC_OUT
+choco install -y ${ABC_DEP//@/ --version } > "$ABC_OUT"
 done
