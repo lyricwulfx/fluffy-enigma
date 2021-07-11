@@ -61,50 +61,46 @@ runs:
   - name: Install | Abc
     shell: bash
     env:
-      DEPS: ${{ steps.abc-init.outputs.deps }}
+      ABC_DEPS: ${{ steps.abc-init.outputs.deps }}
+      ABC_OUT: ${{ (inputs.verbose == '' && '${1:-/dev/stdout}') || '/dev/null' }}
       # DEBIAN_FRONTEND: noninteractive
     run: |
-      # Set output verbosity
-      [ "${{ inputs.verbose }}" != "" ] && 
-      OUT=${1:-/dev/stdout} || 
-      OUT=/dev/null
-
       case "${{ runner.os }}" in
 
       Linux)
-        if [ -n "${DEPS// }" ]
+        if [ -n "${ABC_DEPS// }" ]
         then 
           echo "Updating apt..."
-          sudo apt-get update > $OUT
+          sudo apt-get update > $ABC_OUT
           echo "Installing Linux dependencies:"
-          echo "  $DEPS"
+          echo "  $ABC_DEPS"
           # Apt version syntax is libxyz=1.2.3, we can use a simple replace
-          sudo apt-get install -y ${DEPS//@/=} > $OUT
+          sudo apt-get install -y ${ABC_DEPS//@/=} > $ABC_OUT
         fi
       ;;
 
       macOS)
-        if [ -n "${DEPS// }" ]
+        if [ -n "${ABC_DEPS// }" ]
         then
           echo "Updating brew..."
-          brew update > $OUT
+          brew update > $ABC_OUT
           echo "Installing macOS dependencies:"
-          echo "  $DEPS"
+          echo "  $ABC_DEPS"
           # Brew version syntax is already libxyz@1.2.3 (same as ours)
-          brew install $DEPS > $OUT
+          brew install $ABC_DEPS > $ABC_OUT
         fi
       ;;
 
       Windows)
-        if [ -n "${DEPS// }" ]
+        if [ -n "${ABC_DEPS// }" ]
         then
           echo "Installing Windows dependencies:"
-          echo "  $DEPS"
+          echo "  $ABC_DEPS"
           # Choco version syntax is libxyz --version 1.2.3
           # NOTE: CHOCO WITH VERSIONS, EACH PACKAGE MUST BE INSTALLED ONE AT A TIME
-          for DEP in $DEPS
+          for ABC_DEP in $ABC_DEPS
           do
-            choco install -y ${DEP//@/ --version } > $OUT
+            choco install -y ${ABC_DEP//@/ --version } > $ABC_OUT
           done
         fi
       ;;
