@@ -29,5 +29,5 @@ jobs:
       - name: ABC Install
         uses: ./abc 
         with: 
-          linux: libxkbcommon-dev@0.9
+          linux: libxkbcommon-dev@0.10.0-1
           verbose: true
