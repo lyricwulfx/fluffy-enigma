@@ -68,7 +68,6 @@ runs:
         # CACHE_DIRECTORY= # TODO: Cache apt directory
       macOS)
         ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_UNIX $ABC_PKGS_MACOS" ;;
-        
         # CACHE_DIRECTORY= # TODO: Cache brew directory
       Windows)
         ABC_DEPS="$ABC_PKGS_ALL $ABC_PKGS_WINDOWS"              ;;
@@ -93,19 +92,19 @@ runs:
     run: |
       # Ensure the runner script exists
       ABC_PLATFORM_SCRIPT="$GITHUB_ACTION_PATH/runner/$RUNNER_OS.sh"
-      if [ ! -e $ABC_PLATFORM_SCRIPT ]
+      if [ ! -e "$ABC_PLATFORM_SCRIPT" ]
       then
-        echo "$RUNNER_OS is not supported by ABC" > $ABC_OUT
+        echo "$RUNNER_OS is not supported by ABC" > "$ABC_OUT"
         exit 0
       fi
 
       # Ensure there are any dependencies
       if [ ! -n "${ABC_DEPS// }" ]
       then 
-        echo "No dependencies to install on $RUNNER_OS" > $ABC_OUT
+        echo "No dependencies to install on $RUNNER_OS" > "$ABC_OUT"
         exit 0
       fi
       
       # Install dependencies!
-      . $ABC_PLATFORM_SCRIPT
+      . "$ABC_PLATFORM_SCRIPT"
       
