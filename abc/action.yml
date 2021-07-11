@@ -62,7 +62,6 @@ runs:
     shell: bash
     env:
       DEPS: ${{ steps.abc-init.outputs.deps }}
-      DEBIAN_FRONTEND: noninteractive
     run: |
       # Set output verbosity
       [ "${{ inputs.verbose }}" != "" ] && 
