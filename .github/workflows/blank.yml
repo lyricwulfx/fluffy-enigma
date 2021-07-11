@@ -37,3 +37,6 @@ jobs:
         with: 
           linux: libxkbcommon-dev@0.10.0-1
           windows: ruby
+          unix: ffmpeg
+          all: hugo
+          macos: tree

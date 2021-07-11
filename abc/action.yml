@@ -87,6 +87,8 @@ runs:
   ## Currently cannot use composite step inside a composite action :(
   ## This is a limitation of Github Actions.
   ## TODO: In order to cache, we need to switch ABC to node (js).
+  ## This is not **that** important, since the updating does not use a ton of time,
+  ## but it would still be a very nice optmization!
   # - name: Setup | Package cache
   #   id: abc-cache
   #   uses: actions/cache@v2
