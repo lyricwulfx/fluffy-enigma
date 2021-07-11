@@ -68,7 +68,7 @@ runs:
       ABC_PLATFORM_SCRIPT="runner/$RUNNER_OS.sh"
       if [ ! -e $ABC_PLATFORM_SCRIPT ]
       then
-          echo "$RUNNER_OS is not supported by ABC"
+          echo "$ABC_PLATFORM_SCRIPT is not supported by ABC"
           exit 0
       fi
       
