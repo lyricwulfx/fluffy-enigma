@@ -44,6 +44,8 @@ runs:
       ABC_YAML_FILE="$GITHUB_WORKSPACE/.abc.yml"
       if [ -e "$ABC_YAML_FILE" ]
       then
+        echo "Using .abc.yml file."
+        echo "This feature is experimental! Please report any issues at https://github.com/LyricWulf/abc/issues"
         . "$GITHUB_ACTION_PATH/src/yaml.sh"
         create_variables "$ABC_YAML_FILE" "ABC_YML_"
         ABC_PKGS_ALL="$ABC_PKGS_ALL $ABC_YML_ALL" 
