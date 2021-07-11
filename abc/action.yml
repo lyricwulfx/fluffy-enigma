@@ -65,6 +65,8 @@ runs:
       ABC_OUT: ${{ (inputs.verbose == 'true' && '/dev/stdout') || '/dev/null' }}
       # DEBIAN_FRONTEND: noninteractive
     run: |
+      printenv
+      exit 0
       case "${{ runner.os }}" in
 
       Linux)
