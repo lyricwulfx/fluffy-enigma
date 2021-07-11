@@ -35,7 +35,7 @@ runs:
     id: abc-init
     run: |
       ABC_DEPS=""
-      case "${{ runner.os }}" in
+      case "$RUNNER_OS" in
       Linux)
         ABC_DEPS="${{inputs.all}} ${{inputs.unix}} ${{inputs.linux}}" ;;
         # CACHE_DIRECTORY="C:\ProgramData\chocolatey\lib"$'\r\n'"%TEMP%\chocolatey" # TODO: Cache apt directory
@@ -65,7 +65,14 @@ runs:
       ABC_OUT: ${{ (inputs.verbose == 'true' && '/dev/stdout') || '/dev/null' }}
       # DEBIAN_FRONTEND: noninteractive
     run: |
-      printenv
+      ABC_PLATFORM_SCRIPT="runner/$RUNNER_OS.sh"
+      if [ ! -e $ABC_PLATFORM_SCRIPT ]
+      then
+          echo "$RUNNER_OS is not supported by ABC"
+          exit 0
+      fi
+      
+      . runner/$RUNNER_OS/abc.sh
       exit 0
       case "${{ runner.os }}" in
 
