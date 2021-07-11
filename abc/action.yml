@@ -49,6 +49,8 @@ runs:
         # CACHE_DIRECTORY="C:\ProgramData\chocolatey\lib"$'\r\n'"%TEMP%\chocolatey" # TODO: Cache apt directory
       esac
       
+      # Remove extra spaces
+      ABC_DEPS=$(echo -n "${ABC_DEPS}" | xargs)
       ABC_DEPS_HASH=$(echo -n "${ABC_DEPS}" | sha256sum | awk '{print $1}')
       
       echo "::set-output name=deps::$ABC_DEPS"
@@ -58,8 +60,9 @@ runs:
 
   - name: Install | Abc
     shell: bash
+    env:
+      DEPS: ${{ steps.abc-init.outputs.deps }}
     run: |
-      DEPS="${{ steps.abc-init.outputs.deps }}"
 
       # Set output verbosity
       [ "${{ inputs.verbose }}" != "" ] && 
