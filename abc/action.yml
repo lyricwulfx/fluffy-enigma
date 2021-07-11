@@ -51,7 +51,7 @@ runs:
       if [ -e "$ABC_YAML_FILE" ]
       then
         . "$GITHUB_ACTION_PATH/yaml.sh"
-        create_variables("$ABC_YAML_FILE", "ABC_YML_")
+        create_variables "$ABC_YAML_FILE" "ABC_YML_"
         ABC_PKGS_ALL="$ABC_PKGS_ALL $ABC_YML_ALL" 
         ABC_PKGS_LINUX="$ABC_PKGS_LINUX $ABC_YML_LINUX"
         ABC_PKGS_MACOS="$ABC_PKGS_MACOS $ABC_YML_MACOS"
