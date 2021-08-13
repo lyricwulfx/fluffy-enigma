@@ -45,15 +45,7 @@ jobs:
       - name: Setup | System Dependencies
         uses: lyricwulf/abc@v1.1.0
         with:
-          linux: libxkbcommon-dev libgtk-3-dev
-
-      - name: install llvmpipe and lavapipe
-        run: |
-          echo "Installing Vulkan"
-          sudo apt-get update -y -qq
-          sudo add-apt-repository ppa:ubuntu-x-swat/updates -y
-          sudo apt-get update
-          sudo apt install -y libxcb-xfixes0-dev mesa-vulkan-drivers
+          linux: libxkbcommon-dev libgtk-3-dev libxcb-xfixes0-dev mesa-vulkan-drivers
 
       - name: Setup | Rust
         uses: actions-rs/toolchain@v1
