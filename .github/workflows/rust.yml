@@ -36,7 +36,7 @@ jobs:
     name: Test
     strategy:
       matrix:
-        os: [ubuntu-latest] # mac and windows minutes are expensive
+        os: [windows-latest] # mac and windows minutes are expensive
     runs-on: ${{ matrix.os }}
     steps:
       - name: Setup | Checkout
