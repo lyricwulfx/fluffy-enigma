@@ -1,0 +1,15 @@
+[package]
+name = "laminar"
+version = "0.1.0"
+authors = ["LyricWulf <lyricwulf@gmail.com>"]
+edition = "2018"
+description = "A system for simulating and caching pre-determined particles for fast GPU rendering"
+homepage = "https://embers.app"
+license = "No License"
+
+[dependencies]
+wgpu = "0.9"
+bytemuck = "1.7"
+futures = "0.3"
+tracing = "0.1"
+tracing-subscriber = "0.2"
