@@ -1,6 +1,8 @@
 #!/bin/bash
-echo "Updating apt..."
-sudo apt-get update
+if [ "$ABC_CFG_AUTO_UPDATE" = true ] then
+    echo "Updating apt..."
+    sudo apt-get update
+fi
 echo "Installing Linux dependencies:"
 echo "  $ABC_DEPS"
 # Apt version syntax is libxyz=1.2.3, we can use a simple replace
