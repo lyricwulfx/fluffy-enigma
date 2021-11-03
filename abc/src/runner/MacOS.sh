@@ -1,5 +1,6 @@
 #!/bin/bash
-if [ "$ABC_CFG_AUTO_UPDATE" = true ] then
+if [ "$ABC_CFG_AUTO_UPDATE" = true ] 
+then
     echo "Updating brew..."
     brew update
 fi
