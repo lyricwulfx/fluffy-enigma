@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ "$ABC_CFG_AUTO_UPDATE" = true ] then
+if $ABC_CFG_AUTO_UPDATE; then
     echo "Updating apt..."
     sudo apt-get update
 fi

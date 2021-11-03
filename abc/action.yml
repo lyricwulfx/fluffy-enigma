@@ -107,7 +107,7 @@ runs:
       env:
         ABC_DEPS: ${{ steps.abc-init.outputs.deps }}
         ABC_CFG_VERBOSE: ${{ inputs.verbose }}
-        ABC_CFG_AUTO_UPDATE: ${{ inputs.auto-update }}
+        ABC_CFG_AUTO_UPDATE: ${{ inputs.auto-update != 'false' }}
         # ABC_CACHE_HIT: steps.abc-cache.outputs.cache-hit != 'true'
         # DEBIAN_FRONTEND: noninteractive
       run: |
