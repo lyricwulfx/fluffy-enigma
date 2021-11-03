@@ -40,4 +40,4 @@ jobs:
           unix: ffmpeg
           all: hugo
           macos: tree librsvg graphviz
-          auto-update: false
+          upgrade-all: false
