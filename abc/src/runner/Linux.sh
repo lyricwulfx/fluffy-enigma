@@ -1,5 +1,6 @@
 #!/bin/bash
-if [ "$ABC_CFG_AUTO_UPDATE" == "true" ] 
+# override auto update setting because apt is fast to update repo
+if [ true || "$ABC_CFG_AUTO_UPDATE" == "true" ] 
 then
     echo "Updating apt..."
     sudo apt-get update
